@@ -5,6 +5,7 @@ import {
   Button,
   Card,
   CardContent,
+  Grid,
   IconButton,
   Menu,
   MenuItem,
@@ -30,8 +31,9 @@ const PersonalArea = () => {
   const handleLogout = () => dispatch(setCurrentUser(userInfoInitialState));
 
   const { user } = useSelector((state: RootState) => state.currentUser);
+
   return (
-    <Card sx={{ width: 355, height: 130 }}>
+    <Card sx={{ width: 500, height: 160, borderRadius: '16px' }}>
       <Stack flexDirection="row" justifyContent="flex-end">
         <div>
           <IconButton aria-label="menu" onClick={handleClick}>
@@ -58,15 +60,15 @@ const PersonalArea = () => {
         </div>
       </Stack>
       <Stack flexDirection="row" justifyContent="space-around" alignItems="center">
-        <Avatar alt={user.name} src={user.imgUrl} sx={{ width: 70, height: 70 }} />
+        <Avatar alt={user.name} src={user.imgUrl} sx={{ width: 100, height: 100 }} />
         <CardContent>
-          <Typography variant="h3" sx={{ color: '#16615D', fontSize: '10px' }}>
+          <Typography variant="h3" sx={{ color: '#16615D', fontSize: '15px' }}>
             {user.email}
           </Typography>
-          <Typography variant="h1" sx={{ fontSize: '22px' }}>
+          <Typography variant="h1" sx={{ fontSize: '28px', fontWeight: 400 }}>
             {user.name}
           </Typography>
-          <Typography variant="h3" sx={{ color: '#16615D', fontSize: '10px' }}>
+          <Typography variant="h3" sx={{ color: '#16615D', fontSize: '15px' }}>
             {user.jobTitle}
           </Typography>
         </CardContent>
