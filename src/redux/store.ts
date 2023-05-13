@@ -1,20 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from '@redux-saga/core';
 import { useDispatch } from 'react-redux';
-import { groupsReducer } from './slices/groups/slice';
-import { projectsReducer } from './slices/projects/slice';
-import { usersReducer } from './slices/users/slice';
-import { userIssuesReducer } from './slices/userIssues/slice';
 import { rootSagaWatcher } from '../sagas';
+import { currentUserReducer } from './slices/currentUser/slice';
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
-    groups: groupsReducer,
-    projects: projectsReducer,
-    users: usersReducer,
-    userIssues: userIssuesReducer,
+    currentUser: currentUserReducer,
   },
   middleware: [sagaMiddleware],
 });
