@@ -91,8 +91,23 @@ const ReserveWidget = ({ title, free, widgetId }: ReserveMeetingRoomType) => {
           </Button>
         </Stack>
         <Box>
-          <EventItem title="Встреча с руководством" time=" 18:00 - 18:30" />
-          <EventItem title="Встреча с руководством" time=" 18:00 - 18:30" />
+          {title === 'Переговорки' ? (
+            <>
+              <EventItem title="Встреча с руководством" time=" 18:00 - 18:30" />
+              <EventItem title="Митинг с командой" time=" 10:00 - 11:30" />
+            </>
+          ) : title === 'Парковка' ? (
+            <>
+              <EventItem title="Парковка №1 / Место 12" time=" 09:00 - 18:30" />
+            </>
+          ) : title === 'Рабочее место' ? (
+            <>
+              <EventItem title="Томск / Samokat.tech / OpenSpace" time=" 11:15 - 18:30" />
+              <EventItem title="Томск / Samokat.tech / Кабинет №27" time=" 10:00 - 19:30" />
+            </>
+          ) : (
+            <></>
+          )}
         </Box>
 
         <Stack
