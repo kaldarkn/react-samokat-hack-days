@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import { ReserveMeetingRoom } from '../components/widgets/ReserveMeetingRoom/ReserveMeetingRoom';
+import { ReserveMeetingRoom } from '../components/widgets/ReserveMeetingRoom';
 
 const HomePage = () => {
   return (
