@@ -1,13 +1,24 @@
 import { Grid } from '@mui/material';
-import { ReserveMeetingRoom } from '../components/widgets/ReserveMeetingRoom';
+import { ReserveWidget } from '../components/widgets/ReserveWidget';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useEffect } from 'react';
+import { GET_USER_WIDGETS } from '../../sagas/widgets/actions';
 
 const HomePage = () => {
+  const { widgets } = useSelector((state: RootState) => state.userWidgets);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(GET_USER_WIDGETS());
+  }, []);
   return (
     <>
-      <Grid justifyContent="center" container spacing={{ md: 5, lg: 6, xl: 6 }}>
-        <ReserveMeetingRoom />
-        <ReserveMeetingRoom />
-        <ReserveMeetingRoom />
+      <Grid justifyContent="center" container spacing={{ md: 12, lg: 12, xl: 12 }}>
+        {widgets.map((widget, index) => (
+          <Grid key={widget.id} item xs={12} md={6} xl={4}>
+            <ReserveWidget widgetId={widget.id} title={widget.name} free="3/20" />
+          </Grid>
+        ))}
       </Grid>
     </>
   );

@@ -1,6 +1,33 @@
-import { Box, Button, Card, Paper, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, IconButton, Stack, Typography } from '@mui/material';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-const icon = (
+import { EventItem } from './EventItem';
+import { useDispatch } from 'react-redux';
+import { DELETE_USER_WIDGET } from '../../../sagas/widgets/actions';
+import ClearIcon from '@mui/icons-material/Clear';
+
+const carIcon = (
+  <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M17.3636 6.29414L16.9187 5.19648L16.1298 3.25C15.4525 1.5793 13.8371 0.5 12.0135 0.5H6.98646C5.16325 0.5 3.54746 1.5793 2.87019 3.25L2.08129 5.19648L1.63637 6.29414C0.681625 6.65234 0 7.55703 0 8.625V10.5C0 11.1297 0.243833 11.698 0.633333 12.1379V14.25C0.633333 14.9402 1.20056 15.5 1.9 15.5H3.16667C3.8661 15.5 4.43333 14.9402 4.43333 14.25V13H14.5667V14.25C14.5667 14.9402 15.1339 15.5 15.8333 15.5H17.1C17.7994 15.5 18.3667 14.9402 18.3667 14.25V12.1379C18.7562 11.6984 19 11.1301 19 10.5V8.625C19 7.55703 18.3184 6.65234 17.3636 6.29414ZM5.22223 4.17852C5.51079 3.4668 6.20944 3 6.98646 3H12.0135C12.7906 3 13.4892 3.4668 13.7778 4.17852L14.5667 6.125H4.43333L5.22223 4.17852ZM3.16667 10.4922C2.40667 10.4922 1.9 9.99375 1.9 9.24609C1.9 8.49844 2.40667 8 3.16667 8C3.92667 8 5.06667 9.12148 5.06667 9.86914C5.06667 10.6168 3.92667 10.4922 3.16667 10.4922ZM15.8333 10.4922C15.0733 10.4922 13.9333 10.6168 13.9333 9.86914C13.9333 9.12148 15.0733 8 15.8333 8C16.5933 8 17.1 8.49844 17.1 9.24609C17.1 9.99375 16.5933 10.4922 15.8333 10.4922Z"
+      fill="#16615D"
+    />
+  </svg>
+);
+
+const workplaceIcon = (
+  <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M4 15C4 15 3 15 3 14C3 13 4 9.99999 8 9.99999C12 9.99999 13 13 13 14C13 15 12 15 12 15H4ZM8 9.04999C8.66304 9.04999 9.29893 8.7866 9.76777 8.31775C10.2366 7.84891 10.5 7.21303 10.5 6.54999C10.5 5.88695 10.2366 5.25106 9.76777 4.78222C9.29893 4.31338 8.66304 4.04999 8 4.04999C7.33696 4.04999 6.70107 4.31338 6.23223 4.78222C5.76339 5.25106 5.5 5.88695 5.5 6.54999C5.5 7.21303 5.76339 7.84891 6.23223 8.31775C6.70107 8.7866 7.33696 9.04999 8 9.04999Z"
+      fill="#16615D"
+    />
+    <path
+      d="M2 0C1.46957 0 0.960859 0.210714 0.585786 0.585786C0.210714 0.960859 0 1.46957 0 2V11.5C0 11.8978 0.158035 12.2794 0.43934 12.5607C0.720644 12.842 1.10218 13 1.5 13H2.153C2.36209 12.2651 2.72551 11.5833 3.219 11H1V2C1 1.73478 1.10536 1.48043 1.29289 1.29289C1.48043 1.10536 1.73478 1 2 1H14C14.2652 1 14.5196 1.10536 14.7071 1.29289C14.8946 1.48043 15 1.73478 15 2V11H12.781C13.335 11.654 13.671 12.373 13.847 13H14.5C14.8978 13 15.2794 12.842 15.5607 12.5607C15.842 12.2794 16 11.8978 16 11.5V2C16 1.46957 15.7893 0.960859 15.4142 0.585786C15.0391 0.210714 14.5304 0 14 0H2Z"
+      fill="#16615D"
+    />
+  </svg>
+);
+
+const peoplesIcon = (
   <svg
     width="21"
     height="21"
@@ -23,15 +50,40 @@ const icon = (
   </svg>
 );
 
-const ReserveMeetingRoom = () => {
+type ReserveMeetingRoomType = {
+  title: string;
+  free: string;
+  widgetId: number;
+};
+
+const ReserveWidget = ({ title, free, widgetId }: ReserveMeetingRoomType) => {
+  const icon =
+    title === 'Парковка' ? carIcon : title === 'Переговорки' ? peoplesIcon : workplaceIcon;
+
+  const dispatch = useDispatch();
+  const handlerDeleteWidget = () => {
+    dispatch(DELETE_USER_WIDGET(widgetId));
+  };
   return (
-    <Card sx={{ width: 350, height: 350, borderRadius: '16px', padding: '15px' }}>
+    <Card
+      sx={{
+        width: 350,
+        height: 350,
+        borderRadius: '16px',
+        padding: '15px',
+        position: 'relative',
+      }}>
+      <Box sx={{ position: 'absolute', top: '0px', right: '5px' }}>
+        <IconButton aria-label="delete" size="small">
+          <ClearIcon onClick={handlerDeleteWidget} />
+        </IconButton>
+      </Box>
       <Stack flexDirection="column" justifyContent="space-around" height="100%">
         <Stack flexDirection="row" alignItems="center" justifyContent="space-between">
           <Stack flexDirection="row">
             {icon}
             <Typography component="div" marginLeft={1}>
-              Переговорки
+              {title}
             </Typography>
           </Stack>
           <Button variant="text" sx={{ color: '#226965' }}>
@@ -39,22 +91,8 @@ const ReserveMeetingRoom = () => {
           </Button>
         </Stack>
         <Box>
-          <Paper sx={{ backgroundColor: '#F8F9FC', paddingLeft: '8px', marginTop: '12px' }}>
-            <Typography color="#16615D" fontWeight="600">
-              Встреча с руководством
-            </Typography>
-            <Typography color="#16615D" fontWeight="600">
-              18:00 - 18:30
-            </Typography>
-          </Paper>
-          <Paper sx={{ backgroundColor: '#F8F9FC', paddingLeft: '8px', marginTop: '12px' }}>
-            <Typography color="#16615D" fontWeight="600">
-              Встреча с руководством
-            </Typography>
-            <Typography color="#16615D" fontWeight="600">
-              18:00 - 18:30
-            </Typography>
-          </Paper>
+          <EventItem title="Встреча с руководством" time=" 18:00 - 18:30" />
+          <EventItem title="Встреча с руководством" time=" 18:00 - 18:30" />
         </Box>
 
         <Stack
@@ -65,11 +103,11 @@ const ReserveMeetingRoom = () => {
           <Button variant="text" sx={{ color: '#226965' }} startIcon={<ControlPointIcon />}>
             Забронировать
           </Button>
-          <Typography>Свободно 1/3</Typography>
+          <Typography>Свободно {free}</Typography>
         </Stack>
       </Stack>
     </Card>
   );
 };
 
-export { ReserveMeetingRoom };
+export { ReserveWidget };

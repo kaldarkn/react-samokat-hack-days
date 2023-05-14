@@ -2,6 +2,7 @@ import { Card, Paper, Stack, Typography } from '@mui/material';
 import { DateCalendar } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { useState } from 'react';
+import { EventItem } from './EventItem';
 
 const DAY_NAME = [
   'Понедельник',
@@ -26,22 +27,8 @@ const EventBox = () => {
           <Typography fontSize="28px" fontWeight="700">
             {date?.date()}
           </Typography>
-          <Paper sx={{ backgroundColor: '#F8F9FC', paddingLeft: '8px' }}>
-            <Typography color="#16615D" fontWeight="600">
-              Совещание с командой
-            </Typography>
-            <Typography color="#16615D" fontWeight="600">
-              15:00 - 17:30
-            </Typography>
-          </Paper>
-          <Paper sx={{ backgroundColor: '#F8F9FC', paddingLeft: '8px' }}>
-            <Typography color="#16615D" fontWeight="600">
-              Встреча с руководством
-            </Typography>
-            <Typography color="#16615D" fontWeight="600">
-              18:00 - 18:30
-            </Typography>
-          </Paper>
+          <EventItem title="Совещание с командой" time=" 18:00 - 18:30" />
+          <EventItem title="Встреча с руководством" time=" 12:00 - 13:45" />
         </Stack>
         <DateCalendar value={date} onChange={(newValue) => setDate(newValue)} views={['day']} />
       </Stack>

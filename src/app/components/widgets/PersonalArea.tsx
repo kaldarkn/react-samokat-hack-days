@@ -14,6 +14,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import { RootState } from '../../../redux/store';
 import { setCurrentUser, userInfoInitialState } from '../../../redux/slices/currentUser/slice';
+import { DialogWidgetsAdd } from '../DialogWidgetsAdd';
+import { setUserWidgets } from '../../../redux/slices/userWidgets/slice';
 
 const PersonalArea = () => {
   const dispatch = useDispatch();
@@ -26,7 +28,10 @@ const PersonalArea = () => {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => dispatch(setCurrentUser(userInfoInitialState));
+  const handleLogout = () => {
+    dispatch(setCurrentUser(userInfoInitialState));
+    dispatch(setUserWidgets([]));
+  };
 
   const { user } = useSelector((state: RootState) => state.currentUser);
 
@@ -51,9 +56,8 @@ const PersonalArea = () => {
               vertical: 'top',
               horizontal: 'left',
             }}>
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <DialogWidgetsAdd title="Добавление виджетов" />
+            <MenuItem onClick={handleLogout}>Выйти</MenuItem>
           </Menu>
         </div>
       </Stack>

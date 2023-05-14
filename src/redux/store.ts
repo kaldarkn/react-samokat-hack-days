@@ -3,12 +3,14 @@ import createSagaMiddleware from '@redux-saga/core';
 import { useDispatch } from 'react-redux';
 import { rootSagaWatcher } from '../sagas';
 import { currentUserReducer } from './slices/currentUser/slice';
+import { userWidgetsReducer } from './slices/userWidgets/slice';
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
     currentUser: currentUserReducer,
+    userWidgets: userWidgetsReducer,
   },
   middleware: [sagaMiddleware],
 });
